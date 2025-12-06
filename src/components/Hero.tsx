@@ -49,7 +49,7 @@ export default function Hero() {
                 transition={{ delay: 0.8, duration: 0.8 }}
                 className="absolute bottom-12 right-6 md:right-12 z-20"
             >
-                <div className="relative w-64 h-16 md:w-80 md:h-24">
+                <div className="relative w-80 h-24 md:w-96 md:h-32">
                     <Image
                         src="/images/new_slogan.png"
                         alt="DESIGN YOUR GAME"

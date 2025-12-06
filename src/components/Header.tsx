@@ -33,7 +33,7 @@ export default function Header() {
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="relative w-32 h-10 md:w-40 md:h-12">
+                    <div className="relative w-64 h-20 md:w-80 md:h-24">
                         <Image
                             src="/images/stiz_logo_final.png"
                             alt="STIZ Basketball Club"
