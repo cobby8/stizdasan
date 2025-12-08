@@ -60,9 +60,10 @@ export default function NoticeSection() {
                                         exit={{ height: 0, opacity: 0 }}
                                         className="border-t border-white/10 bg-black/20"
                                     >
-                                        <div className="p-6 text-zinc-300 leading-relaxed whitespace-pre-wrap">
-                                            {notice.content}
-                                        </div>
+                                        <div
+                                            className="p-6 text-zinc-300 leading-relaxed whitespace-pre-wrap prose prose-invert max-w-none prose-img:rounded-xl prose-a:text-steez-orange prose-a:underline"
+                                            dangerouslySetInnerHTML={{ __html: notice.content }}
+                                        />
                                     </motion.div>
                                 )}
                             </AnimatePresence>

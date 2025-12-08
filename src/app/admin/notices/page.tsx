@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Save, Plus, Trash2, Star, Edit, X } from "lucide-react";
+import { useState, useRef } from "react";
+import { Save, Plus, Trash2, Star, Edit, X, Bold, Italic, Link as LinkIcon, Image as ImageIcon } from "lucide-react";
 import initialData from "../../../data/notices.json";
 import { useRouter } from "next/navigation";
 
@@ -25,6 +25,8 @@ export default function NoticesAdmin() {
     });
 
     const router = useRouter();
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -35,10 +37,10 @@ export default function NoticesAdmin() {
                 body: JSON.stringify({ type: "notices", data: notices }),
             });
             if (!res.ok) throw new Error("Failed to save");
-            alert("Notices saved successfully!");
+            alert("공지사항이 저장되었습니다.");
             router.refresh();
         } catch (e) {
-            alert("Error saving notices");
+            alert("저장 중 오류가 발생했습니다.");
         } finally {
             setIsSaving(false);
         }
@@ -74,9 +76,66 @@ export default function NoticesAdmin() {
     };
 
     const deleteNotice = (id: string) => {
-        if (confirm("Delete this notice?")) {
+        if (confirm("정말 이 공지사항을 삭제하시겠습니까?")) {
             setNotices(notices.filter(n => n.id !== id));
         }
+    };
+
+    // --- Rich Text Editor Helpers ---
+
+    const insertText = (before: string, after: string = "") => {
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = textarea.value;
+        const selectedText = text.substring(start, end);
+
+        const newText = text.substring(0, start) + before + selectedText + after + text.substring(end);
+
+        setFormData({ ...formData, content: newText });
+
+        // Restore focus and selection
+        setTimeout(() => {
+            textarea.focus();
+            textarea.setSelectionRange(start + before.length, end + before.length);
+        }, 0);
+    };
+
+    const handleLink = () => {
+        const url = prompt("링크 주소를 입력하세요 (https://...):");
+        if (url) {
+            insertText(`<a href="${url}" target="_blank" class="text-steez-orange underline">`, "</a>");
+        }
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const data = new FormData();
+        data.append("file", file);
+
+        try {
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: data
+            });
+            const result = await res.json();
+
+            if (result.url) {
+                insertText(`<img src="${result.url}" alt="image" class="rounded-xl my-4 w-full max-w-lg" />`);
+            } else {
+                alert("이미지 업로드 실패");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("이미지 업로드 중 오류 발생");
+        }
+
+        // Reset input
+        if (fileInputRef.current) fileInputRef.current.value = "";
     };
 
     return (
@@ -143,15 +202,45 @@ export default function NoticesAdmin() {
                                 </label>
                             </div>
                         </div>
+
+                        {/* Rich Text Editor Area */}
                         <div>
                             <label className="block text-xs font-bold text-zinc-400 mb-1">내용</label>
-                            <textarea
-                                value={formData.content}
-                                onChange={e => setFormData({ ...formData, content: e.target.value })}
-                                className="w-full px-4 py-2 border rounded-lg h-32"
-                                placeholder="공지 내용을 입력하세요..."
-                            />
+                            <div className="border rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-black">
+                                {/* Toolbar */}
+                                <div className="bg-zinc-50 border-b p-2 flex gap-1">
+                                    <button onClick={() => insertText("<b>", "</b>")} className="p-2 hover:bg-zinc-200 rounded" title="Bold">
+                                        <Bold size={16} />
+                                    </button>
+                                    <button onClick={() => insertText("<i>", "</i>")} className="p-2 hover:bg-zinc-200 rounded" title="Italic">
+                                        <Italic size={16} />
+                                    </button>
+                                    <div className="w-px bg-zinc-300 mx-1 mt-1 mb-1"></div>
+                                    <button onClick={handleLink} className="p-2 hover:bg-zinc-200 rounded" title="Insert Link">
+                                        <LinkIcon size={16} />
+                                    </button>
+                                    <button onClick={() => fileInputRef.current?.click()} className="p-2 hover:bg-zinc-200 rounded" title="Insert Image">
+                                        <ImageIcon size={16} />
+                                    </button>
+                                    <input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                    />
+                                </div>
+                                <textarea
+                                    ref={textareaRef}
+                                    value={formData.content}
+                                    onChange={e => setFormData({ ...formData, content: e.target.value })}
+                                    className="w-full px-4 py-4 h-96 outline-none resize-y text-zinc-800 leading-relaxed font-mono text-sm"
+                                    placeholder="HTML 태그를 사용할 수 있습니다. 내용을 입력하세요..."
+                                />
+                            </div>
+                            <p className="text-xs text-zinc-400 mt-1">* 이미지나 링크는 위 도구 모음을 사용하여 쉽게 삽입할 수 있습니다.</p>
                         </div>
+
                         <div className="flex justify-end gap-2 pt-2">
                             <button onClick={cancelEdit} className="px-4 py-2 text-zinc-500 font-bold hover:bg-zinc-100 rounded-lg">취소</button>
                             <button onClick={saveEdit} className="px-6 py-2 bg-steez-orange text-white font-bold rounded-lg hover:bg-black transition-colors">확인</button>
