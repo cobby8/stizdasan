@@ -59,7 +59,8 @@ export default function EditableText({
                 type="text"
                 value={value}
                 onChange={handleChange}
-                className={`${commonClasses} min-w-[200px]`}
+                className={`${commonClasses} min-w-[100px] max-w-full`}
+                style={{ width: `${Math.max(value.length, 10)}ch` }}
             />
         );
     }

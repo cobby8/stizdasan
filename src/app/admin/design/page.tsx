@@ -31,8 +31,8 @@ export default function AdminDesignPage() {
                 <About />
                 <Location />
                 <Footer />
-                <FloatingEditButton />
             </div>
+            <FloatingEditButton />
         </div>
     );
 }
