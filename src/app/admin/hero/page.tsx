@@ -19,11 +19,17 @@ export default function HeroAdmin() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ type: "hero", data }),
             });
-            if (!res.ok) throw new Error("Failed to save");
+            if (!res.ok) {
+                const errorData = await res.json();
+                if (errorData.error === "VERCEL_READ_ONLY") {
+                    throw new Error("Vercel 배포 환경에서는 파일을 저장할 수 없습니다.\n로컬에서 작업 후 Git으로 Push 해주세요.");
+                }
+                throw new Error("Failed to save");
+            }
             alert("메인 화면 설정이 저장되었습니다!");
             router.refresh();
-        } catch (e) {
-            alert("저장 중 오류가 발생했습니다.");
+        } catch (e: any) {
+            alert(e.message || "저장 중 오류가 발생했습니다.");
         } finally {
             setIsSaving(false);
         }
@@ -84,19 +90,37 @@ export default function HeroAdmin() {
                         <div className="space-y-4">
                             <div>
                                 <label className="block text-sm font-bold text-zinc-600 mb-1">첫번째 버튼 (강조)</label>
-                                <input
-                                    value={data.primary_button || ''}
-                                    onChange={(e) => setData({ ...data, primary_button: e.target.value })}
-                                    className="w-full px-4 py-3 bg-zinc-50 rounded-xl border-transparent focus:border-steez-orange focus:bg-white transition-all"
-                                />
+                                <div className="space-y-2">
+                                    <input
+                                        placeholder="버튼 텍스트"
+                                        value={data.primary_button || ''}
+                                        onChange={(e) => setData({ ...data, primary_button: e.target.value })}
+                                        className="w-full px-4 py-3 bg-zinc-50 rounded-xl border-transparent focus:border-steez-orange focus:bg-white transition-all"
+                                    />
+                                    <input
+                                        placeholder="이동할 링크 (예: https://...)"
+                                        value={data.primary_button_link || ''}
+                                        onChange={(e) => setData({ ...data, primary_button_link: e.target.value })}
+                                        className="w-full px-4 py-3 bg-zinc-50 rounded-xl border-transparent focus:border-steez-orange focus:bg-white transition-all text-xs text-zinc-500"
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <label className="block text-sm font-bold text-zinc-600 mb-1">두번째 버튼 (기본)</label>
-                                <input
-                                    value={data.secondary_button || ''}
-                                    onChange={(e) => setData({ ...data, secondary_button: e.target.value })}
-                                    className="w-full px-4 py-3 bg-zinc-50 rounded-xl border-transparent focus:border-steez-orange focus:bg-white transition-all"
-                                />
+                                <div className="space-y-2">
+                                    <input
+                                        placeholder="버튼 텍스트"
+                                        value={data.secondary_button || ''}
+                                        onChange={(e) => setData({ ...data, secondary_button: e.target.value })}
+                                        className="w-full px-4 py-3 bg-zinc-50 rounded-xl border-transparent focus:border-steez-orange focus:bg-white transition-all"
+                                    />
+                                    <input
+                                        placeholder="이동할 링크 (예: /schedule)"
+                                        value={data.secondary_button_link || ''}
+                                        onChange={(e) => setData({ ...data, secondary_button_link: e.target.value })}
+                                        className="w-full px-4 py-3 bg-zinc-50 rounded-xl border-transparent focus:border-steez-orange focus:bg-white transition-all text-xs text-zinc-500"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

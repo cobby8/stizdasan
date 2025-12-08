@@ -24,8 +24,14 @@ export async function POST(req: Request) {
         await fs.writeFile(filePath, JSON.stringify(data, null, 4), "utf-8");
 
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Save Error:", error);
+
+        // Check for Vercel/Read-only error
+        if (error.code === 'EROFS' || error.message.includes('read-only')) {
+            return NextResponse.json({ error: "VERCEL_READ_ONLY" }, { status: 500 });
+        }
+
         return NextResponse.json({ error: "Failed to save data" }, { status: 500 });
     }
 }

@@ -52,12 +52,12 @@ export default function Hero() {
                     transition={{ delay: 0.4, duration: 0.8 }}
                     className="flex flex-wrap gap-4 justify-center"
                 >
-                    <button className="px-8 py-4 bg-steez-orange text-white text-lg font-bold rounded-full hover:bg-black transition-all duration-300 shadow-xl shadow-steez-orange/20">
+                    <a href={heroData.primary_button_link || '#'} className="px-8 py-4 bg-steez-orange text-white text-lg font-bold rounded-full hover:bg-black transition-all duration-300 shadow-xl shadow-steez-orange/20">
                         <EditableText section="hero" field="primary_button" initialValue={heroData.primary_button} />
-                    </button>
-                    <button className="px-8 py-4 bg-white border border-zinc-200 text-black text-lg font-bold rounded-full hover:bg-zinc-50 transition-all shadow-sm">
+                    </a>
+                    <a href={heroData.secondary_button_link || '#'} className="px-8 py-4 bg-white border border-zinc-200 text-black text-lg font-bold rounded-full hover:bg-zinc-50 transition-all shadow-sm">
                         <EditableText section="hero" field="secondary_button" initialValue={heroData.secondary_button} />
-                    </button>
+                    </a>
                 </motion.div>
             </div>
 

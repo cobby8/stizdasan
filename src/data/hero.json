@@ -4,5 +4,7 @@
     "subtitle": "Dasan Academy",
     "slogan_image": "/images/new_slogan.png",
     "primary_button": "수강 상담하기",
-    "secondary_button": "시간표 확인"
+    "primary_button_link": "https://pf.kakao.com/_xbdxejK",
+    "secondary_button": "시간표 확인",
+    "secondary_button_link": "/schedule"
 }
