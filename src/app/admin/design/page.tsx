@@ -17,15 +17,20 @@ export default function AdminDesignPage() {
             </div>
 
             {/* We render the components here exactly as they appear on frontend */}
-            <div className="relative">
+            {/* Visual Editor Isolation Container */}
+            <div
+                className="relative bg-white shadow-2xl mx-auto my-8 border border-zinc-200"
+                style={{
+                    maxWidth: '100%',
+                    transform: 'translateZ(0)', // Force new stacking context for fixed children
+                    contain: 'paint layout', // Isolate layout
+                }}
+            >
                 <Header />
                 <Hero />
                 <About />
-                {/* Features might need check if it adheres to EditableText */}
                 <Location />
                 <Footer />
-
-                {/* The Edit Button is only available here */}
                 <FloatingEditButton />
             </div>
         </div>
