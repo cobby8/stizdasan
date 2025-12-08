@@ -32,7 +32,7 @@ const cards = [
 
 export default function Registration() {
     return (
-        <section id="registration" className="py-24 bg-white">
+        <section id="registration" className="py-16 md:py-20 bg-white">
             <div className="container mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -40,7 +40,7 @@ export default function Registration() {
                     viewport={{ once: true }}
                     className="text-center mb-16"
                 >
-                    <h2 className="text-4xl md:text-5xl font-black mb-6 italic uppercase tracking-tight text-zinc-900">
+                    <h2 className="text-3xl md:text-4xl font-black mb-6 italic uppercase tracking-tight text-zinc-900">
                         JOIN <span className="text-steez-orange">US</span>
                     </h2>
                     <p className="text-zinc-600 text-lg max-w-2xl mx-auto">

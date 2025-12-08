@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 
-export const SHEET_ID = "1Tc-JXZlXfbwWJzVhk3NKB6oZoDrqy8iEeIAN0WIjwww";
-const EXPORT_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1000455425`;
+// export const SHEET_ID = "1Tc-JXZlXfbwWJzVhk3NKB6oZoDrqy8iEeIAN0WIjwww"; // Now dynamic
+// const EXPORT_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=1000455425`;
 
 export interface ClassSession {
     grade: string;
@@ -18,8 +18,9 @@ export interface TimeSlot {
 
 export const DAYS = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 
-export async function fetchSchedule(branch: "dasan1" | "dasan2"): Promise<TimeSlot[]> {
+export async function fetchSchedule(sheetId: string, branch: "dasan1" | "dasan2"): Promise<TimeSlot[]> {
     try {
+        const EXPORT_URL = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=1000455425`;
         const response = await fetch(EXPORT_URL);
         const text = await response.text();
         const result = Papa.parse(text, { header: false, skipEmptyLines: false });

@@ -7,11 +7,11 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-    { name: "About", href: "#about" },
-    { name: "Curriculum", href: "#curriculum" },
-    { name: "Schedule", href: "#schedule" },
-    { name: "Registration", href: "#registration" },
-    { name: "Location", href: "#location" },
+    { name: "소개", href: "#about" },
+    { name: "교육과정", href: "#curriculum" },
+    { name: "일정표", href: "#schedule" },
+    { name: "수강신청", href: "#registration" },
+    { name: "오시는 길", href: "#location" },
 ];
 
 export default function Header() {
@@ -43,28 +43,6 @@ export default function Header() {
                     </div>
                 </Link>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.name}
-                            href={item.href}
-                            className={`text-sm font-bold transition-colors uppercase tracking-wide ${isScrolled ? "text-zinc-600 hover:text-steez-orange" : "text-zinc-600 hover:text-steez-orange"
-                                // Always dark text for Bright Theme
-                                }`}
-                        >
-                            {item.name}
-                        </Link>
-                    ))}
-                    <Link
-                        href="#registration"
-                        className="px-6 py-2 bg-steez-orange text-white text-sm font-bold uppercase rounded-full hover:bg-black transition-all shadow-md"
-                    >
-                        Join Us
-                    </Link>
-                </nav>
-
-                {/* Mobile Menu Button */}
                 <button
                     className={`md:hidden transition-colors text-black`}
                     onClick={() => setIsOpen(true)}

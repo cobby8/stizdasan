@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Elite Coaching Staff",
+        "description": "선수 출신 엘리트 코치진의 전문적인 트레이닝.",
+        "icon": "/images/coach_icon.png"
+    },
+    {
+        "title": "Premium Facility",
+        "description": "국제 규격 코트와 충격 흡수 마루, 냉난방 완비.",
+        "icon": "/images/court_icon.png"
+    },
+    {
+        "title": "Systematic Program",
+        "description": "연령과 실력에 맞춘 STIZ만의 독자적인 교육 커리큘럼.",
+        "icon": "/images/program_icon.png"
+    },
+    {
+        "title": "Care System",
+        "description": "셔틀버스 운행 및 안심 문자 서비스, 철저한 출결 관리.",
+        "icon": "/images/care_icon.png"
+    }
+]

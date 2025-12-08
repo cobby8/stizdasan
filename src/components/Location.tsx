@@ -4,21 +4,23 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Navigation } from "lucide-react";
 import { branches } from "../data/locations";
+import EditableText from "./admin/editor/EditableText";
+import locationUi from "../data/location_ui.json";
 
 export default function Location() {
     const [activeBranch, setActiveBranch] = useState<"dasan1" | "dasan2">("dasan1");
     const branch = branches[activeBranch];
 
     return (
-        <section id="location" className="py-24 bg-zinc-50 border-t border-zinc-100">
+        <section id="location" className="py-16 md:py-20 bg-zinc-50 border-t border-zinc-100">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-12">
                     <div className="flex items-center justify-center gap-2 text-steez-orange font-bold uppercase tracking-wider mb-2">
                         <MapPin size={24} />
-                        <span>LOCATION</span>
+                        <EditableText section="location_ui" field="title_en" initialValue={locationUi.title_en} as="span" />
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-black text-zinc-900 uppercase italic">
-                        FIND US
+                    <h2 className="text-3xl md:text-4xl font-black text-zinc-900 uppercase italic">
+                        <EditableText section="location_ui" field="title_ko" initialValue={locationUi.title_ko} as="span" />
                     </h2>
                 </div>
 
@@ -56,7 +58,9 @@ export default function Location() {
 
                         <div className="space-y-6">
                             <div>
-                                <span className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1">Address</span>
+                                <span className="block text-xs font-bold text-zinc-400 uppercase tracking-widest mb-1">
+                                    <EditableText section="location_ui" field="address_label" initialValue={locationUi.address_label} as="span" />
+                                </span>
                                 <p className="text-lg text-zinc-700 font-medium">{branch.address}</p>
                                 <p className="text-zinc-500">{branch.details}</p>
                             </div>
@@ -67,10 +71,10 @@ export default function Location() {
                                 className="inline-flex items-center justify-center w-full py-4 bg-[#FF004E] text-white font-bold rounded-xl hover:bg-[#E60046] transition-colors shadow-md group"
                             >
                                 <Navigation size={20} className="mr-2 group-hover:rotate-12 transition-transform" />
-                                <span>T맵으로 안내하기</span>
+                                <EditableText section="location_ui" field="tmap_button" initialValue={locationUi.tmap_button} as="span" />
                             </a>
                             <p className="text-xs text-zinc-400 text-center">
-                                * T맵 안내는 모바일 앱에서 실행됩니다.
+                                <EditableText section="location_ui" field="tmap_notice" initialValue={locationUi.tmap_notice} as="span" />
                             </p>
                         </div>
                     </motion.div>

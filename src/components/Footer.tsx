@@ -34,7 +34,7 @@ export default function Footer() {
                     {/* Contact Info (Simplified) */}
                     <div className="flex flex-col gap-8">
                         <div>
-                            <h3 className="text-lg font-bold mb-6 border-b border-white/10 pb-2">CONTACT</h3>
+                            <h3 className="text-lg font-bold mb-6 border-b border-white/10 pb-2">문의하기</h3>
                             <p className="text-xl font-bold flex items-center gap-2 text-steez-orange">
                                 <Phone size={24} />
                                 070-8824-5712
@@ -47,8 +47,8 @@ export default function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-center text-zinc-600 text-sm">
                     <p>&copy; 2025 STIZ BASKETBALL CLUB. All rights reserved.</p>
                     <div className="flex gap-6 mt-4 md:mt-0">
-                        <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-                        <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+                        <Link href="#" className="hover:text-white transition-colors">개인정보처리방침</Link>
+                        <Link href="#" className="hover:text-white transition-colors">이용약관</Link>
                     </div>
                 </div>
             </div>
