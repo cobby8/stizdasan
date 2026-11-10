@@ -2,9 +2,10 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import fs from "fs/promises";
 import path from "path";
+import { authOptions } from "@/utils/authOptions";
 
 export async function POST(req: Request) {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
     if (!session) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -13,7 +14,7 @@ export async function POST(req: Request) {
         const { type, data } = await req.json();
 
         // Validate type to prevent arbitrary file writes
-        const validTypes = ["features", "coaches", "locations"];
+        const validTypes = ["features", "coaches", "locations", "hero", "settings", "notices"];
         if (!validTypes.includes(type)) {
             return NextResponse.json({ error: "Invalid data type" }, { status: 400 });
         }
